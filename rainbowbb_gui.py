@@ -2,8 +2,8 @@
 
 import sys
 from os.path import dirname, realpath
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QAction, QCheckBox, QComboBox, QPushButton, QDockWidget, QTextEdit, QMainWindow, QToolBar
+from PySide.QtCore import Qt
+from PySide.QtGui import QApplication, QAction, QCheckBox, QComboBox, QPushButton, QDockWidget, QTextEdit, QMainWindow, QToolBar
 
 try: __file__
 except: __file__ = sys.executable
