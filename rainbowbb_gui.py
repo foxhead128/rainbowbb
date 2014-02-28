@@ -48,7 +48,7 @@ def create_gradient(cycle, reverse=False, bounce=False):
         gradient += ")"
     return gradient
 
-stylesheet = "QToolBar { background: %s; }"
+stylesheet = "QToolBar { background: %s; border: 0; }"
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
