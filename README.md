@@ -14,17 +14,17 @@ Command-line arguments
 
 >Sets **bounce** in rainbowbb.**colorize** to **True**.
 
-**-c <CYCLENAME>, --cycle=<CYCLENAME>**
+**-c CYCLENAME, --cycle=CYCLENAME**
 
->Sets **cycle** in rainbowbb.**colorize** to **<CYCLENAME>**.
+>Sets **cycle** in rainbowbb.**colorize** to **CYCLENAME**.
 
 **-r, --reverse**
 
 >Sets **reverse** in rainbowbb.**colorize** to **True**.
 
-**-s <SIZE>, --size=<SIZE>**
+**-s SIZE, --size=SIZE**
 
->Sets **size** in rainbowbb.**size** to **<SIZE>**.
+>Sets **size** in rainbowbb.**size** to **SIZE**.
 
 **-w, --by-word**
 
