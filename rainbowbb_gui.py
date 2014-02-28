@@ -39,7 +39,7 @@ def create_gradient(cycle):
         picked_cycle = rainbowbb.cycles[cycle]
         increment = round(1/len(picked_cycle), 1)
         gradient = "qlineargradient(x1:0, y1:0, x2:0, y2:1"
-        counter = increment
+        counter = 0
         for color in picked_cycle:
             gradient += ", stop:%s #%s" % (counter, color)
             counter += increment
