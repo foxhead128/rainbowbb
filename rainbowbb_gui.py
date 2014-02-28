@@ -37,16 +37,14 @@ def create_gradient(cycle, reverse=False, bounce=False):
     except: return "transparent"
     else:
         picked_cycle = rainbowbb.cycles[cycle][::-1] if reverse else rainbowbb.cycles[cycle]
-        increment = round(1/len(picked_cycle)/2 if bounce else 1/len(picked_cycle), 2)
-        gradient = "qlineargradient(x1:0, y1:0, x2:0, y2:1"
+        if bounce:
+            picked_cycle = picked_cycle + picked_cycle[::-1]
+        increment = round(1/(len(picked_cycle)-1), 2)
+        gradient = "qlineargradient(x1:0, y1:0, x2:1, y2:0"
         counter = 0
         for color in picked_cycle:
             gradient += ", stop:%s #%s" % (counter, color)
             counter += increment
-        if bounce:
-            for color in picked_cycle[::-1]:
-                gradient += ", stop:%s #%s" % (counter, color)
-                counter += increment
         gradient += ")"
     return gradient
 
