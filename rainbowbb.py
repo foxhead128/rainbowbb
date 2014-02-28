@@ -31,33 +31,72 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org/>"""
 
-import sys
+import sys, getopt
 
-cycles = ("FF7F7F", "FFBF7F", "FFFF7F", "BFFF7F", "7FFF7F", "7FFFBF", "7FFFFF", "7FBFFF", "7F7FFF", "BF7FFF", "FF7FFF", "FF7FBF")
+cycles = {"pastel": ("FF7F7F", "FFBF7F", "FFFF7F", "BFFF7F", "7FFF7F", "7FFFBF", "7FFFFF", "7FBFFF", "7F7FFF", "BF7FFF", "FF7FFF", "FF7FBF"), "hard": ("FF0000", "FFFF00", "00FF00", "00FFFF", "0000FF", "FF00FF"), "grayscale": ("000000", "3F3F3F", "7F7F7F", "BFBFBF", "7F7F7F", "3F3F3F"), "fail": ("7F3F3F", "7F5F3F", "7F7F3F", "57FF3F", "37FF3F", "37FF5F", "37F7FF", "3F57FF", "3F37FF", "5F37FF", "7F37FF", "7F3F5F"), "desaturated": ("7F3F3F", "7F5F3F", "7F7F3F", "5F7F3F", "3F7F3F", "3F7F5F", "3F7F7F", "3F5F7F", "3F3F7F", "5F3F7F", "7F3F7F", "7F3F5F")}
 
-def rainbowize(text=None):
+def colorize(text, cycle="pastel", reverse=False, by_char=True, bounce=True):
     if type(text) is not str:
         return
-    splittext = list(text)
+    elif cycle not in cycles.keys():
+        print("Invalid color cycle.")
+        print("Valid color cycles: " + ", ".join(list(cycles.keys())))
+        sys.exit(2)
+    splittext = list(text) if by_char else text.split()
     counter = 0
     adder = 1
     thestring = ""
     for char in splittext:
-        thestring += char if char == " " else "[color=#%s]%s[/color]" % (cycles[counter], char)
+        thestring += char if char == " " else "[color=#%s]%s[/color]" % (cycles[cycle][counter if not reverse else len(cycles[cycle]) - (counter + 1)], char)
         if char == " ":
             continue
-        if counter == len(cycles) - 1:
-            counter = 0
+        if bounce:
+            if counter == len(cycles[cycle]) - 1:
+                counter = 0
+            else:
+                counter += adder
         else:
+            if counter == len(cycles[cycle]) - 1:
+                adder = -1
+            elif counter == 0:
+                adder = 1
             counter += adder
+        if not by_char:
+            thestring += " "
     return thestring
 
-def main():
-    if len(sys.argv) > 1:
-        text = " ".join(sys.argv[1:])
+def size(text, size=None):
+    if not size:
+        return text
+    else:
+        return "[size=%s]" % (size,) + text + "[/size]"
+
+def main(argv=[]):
+    try:
+        opts, args = getopt.getopt(argv, "rbwc:s:", ["reverse", "bounce", "cycle=", "size=", "by-word"])
+    except getopt.GetoptError:
+        sys.exit(2)
+    cycle = "pastel"
+    fontsize = None
+    by_char = True
+    bounce = False
+    reverse = False
+    for opt, arg in opts:
+        if opt in ("-c", "--cycle"):
+            cycle = arg
+        elif opt in ("-s", "--size"):
+            fontsize = arg
+        elif opt in ("-w", "--by-word"):
+            by_char = False
+        elif opt in ("-b", "--bounce"):
+            bounce = True
+        elif opt in ("-r", "--reverse"):
+            reverse = True
+    if len(args) > 0:
+        text = " ".join(args)
     else:
         text = input("Enter some text here: ")
-    print(rainbowize(text))
+    print(size(colorize(text, cycle, reverse, by_char, bounce), fontsize))
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
