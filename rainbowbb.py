@@ -56,7 +56,8 @@ for fname in ecycles:
     except: continue
     else:
         cycles[fname] = tuple([line.replace("#", "").replace("\n", "") for line in f.readlines()])
-        print("Loaded external color cycle \"" + fname + "\"")
+        if __name__ == "__main__":
+            print("Loaded external color cycle \"" + fname + "\"")
 
 def colorize(text, cycle="pastel", reverse=False, by_char=True, bounce=False):
     if type(text) is not str:
