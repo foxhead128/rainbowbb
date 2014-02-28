@@ -41,7 +41,7 @@ def colorize(text, cycle="pastel", reverse=False, by_char=True, bounce=False):
     elif cycle not in cycles.keys():
         print("Invalid color cycle.")
         print("Valid color cycles: " + ", ".join(list(cycles.keys())))
-        sys.exit(2)
+        return
     splittext = list(text) if by_char else text.split()
     counter = 0
     adder = 1
