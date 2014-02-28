@@ -35,7 +35,7 @@ import sys, getopt
 
 cycles = {"pastel": ("FF7F7F", "FFBF7F", "FFFF7F", "BFFF7F", "7FFF7F", "7FFFBF", "7FFFFF", "7FBFFF", "7F7FFF", "BF7FFF", "FF7FFF", "FF7FBF"), "hard": ("FF0000", "FFFF00", "00FF00", "00FFFF", "0000FF", "FF00FF"), "grayscale": ("000000", "3F3F3F", "7F7F7F", "BFBFBF", "7F7F7F", "3F3F3F"), "fail": ("7F3F3F", "7F5F3F", "7F7F3F", "57FF3F", "37FF3F", "37FF5F", "37F7FF", "3F57FF", "3F37FF", "5F37FF", "7F37FF", "7F3F5F"), "desaturated": ("7F3F3F", "7F5F3F", "7F7F3F", "5F7F3F", "3F7F3F", "3F7F5F", "3F7F7F", "3F5F7F", "3F3F7F", "5F3F7F", "7F3F7F", "7F3F5F")}
 
-def colorize(text, cycle="pastel", reverse=False, by_char=True, bounce=True):
+def colorize(text, cycle="pastel", reverse=False, by_char=True, bounce=False):
     if type(text) is not str:
         return
     elif cycle not in cycles.keys():
@@ -50,7 +50,7 @@ def colorize(text, cycle="pastel", reverse=False, by_char=True, bounce=True):
         thestring += char if char == " " else "[color=#%s]%s[/color]" % (cycles[cycle][counter if not reverse else len(cycles[cycle]) - (counter + 1)], char)
         if char == " ":
             continue
-        if bounce:
+        if not bounce:
             if counter == len(cycles[cycle]) - 1:
                 counter = 0
             else:
